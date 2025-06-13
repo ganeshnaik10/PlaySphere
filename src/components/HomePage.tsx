@@ -8,6 +8,8 @@ import PlatformSelector from "../components/PlatformSelector";
 import SortSelector from "../components/SortSelector";
 import { Platform } from "../hooks/useGames";
 import { Genre } from "../hooks/useGenres";
+import AdBanner from "../components/AdBanner";
+
 
 export interface GameQuery {
   genre: Genre | null;
@@ -20,6 +22,7 @@ const HomePage = () => {
   const [gameQuery, setGameQuery] = useState<GameQuery>({} as GameQuery);
 
   return (
+    
     <Grid
       templateAreas={{
         base: `"nav" "main"`,
@@ -27,6 +30,7 @@ const HomePage = () => {
       }}
       templateColumns={{ base: '1fr', lg: '250px 1fr' }}
     >
+      
       <GridItem area="nav">
         <NavBar onSearch={(searchText) => setGameQuery({ ...gameQuery, searchText })} />
       </GridItem>
@@ -47,7 +51,13 @@ const HomePage = () => {
         </Box>
         <GameGrid gameQuery={gameQuery} />
       </GridItem>
+      <div>
+      <h1>🎮 Welcome to PlaySphere</h1>
+      <AdBanner />
+    </div>
     </Grid>
+    
+      
   );
 };
 
