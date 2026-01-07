@@ -1,0 +1,40 @@
+import axios, { CanceledError, AxiosRequestConfig } from "axios";
+export interface FetchResponse<T> {
+  count: number;
+  next?: string | null;
+  results: T[];
+}
+
+const axiosInstance = axios.create({
+  baseURL: "https://api.rawg.io/api",
+  params: {
+    key: "6bd2c7a823c74f99b43d1de958d51439",
+  },
+  // headers: {}
+});
+
+export { CanceledError };
+
+class ApiClient<T> {
+  // the variable is automatically set to whatever you insert into the constructor
+  constructor(
+    public endpoint: string,
+    public requestConfig?: AxiosRequestConfig
+  ) {}
+
+  //T is a generic type - acts as a placeholder for a type
+  getAll = async (config?: AxiosRequestConfig) => {
+    const res = await axiosInstance.get<FetchResponse<T>>(
+      this.endpoint,
+      config
+    );
+    return res.data;
+  };
+
+  get = async (id: string | number) => {
+    const res = await axiosInstance.get<T>(`${this.endpoint}/${id}`);
+    return res.data;
+  };
+}
+
+export default ApiClient;
